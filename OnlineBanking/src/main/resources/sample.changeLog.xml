@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="Saurabh (generated)" id="1589378976508-1">
+        <createSequence sequenceName="admin_adminid_seq"/>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-2">
+        <createSequence sequenceName="hibernate_sequence"/>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-3">
+        <createSequence sequenceName="primarytransaction_id_seq"/>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-4">
+        <createSequence sequenceName="role_roleid_seq"/>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-5">
+        <createSequence sequenceName="schedule_scheduleid_seq"/>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-6">
+        <createTable tableName="account">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="accountid" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="accountstatus" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bankifsc" type="VARCHAR(255)"/>
+            <column name="date" type="date"/>
+            <column name="firstname" type="VARCHAR(255)"/>
+            <column name="lastname" type="VARCHAR(255)"/>
+            <column name="remarks" type="VARCHAR(255)"/>
+            <column name="customer_customerid" type="BIGINT"/>
+            <column name="proofid" type="INT"/>
+            <column name="customeridref" type="BIGINT"/>
+            <column defaultValueNumeric="0.0" name="balance" type="FLOAT8"/>
+            <column defaultValueNumeric="0" name="phoneno" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-7">
+        <createTable tableName="admin">
+            <column autoIncrement="true" name="adminid" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="admin_pkey"/>
+            </column>
+            <column name="adminname" type="VARCHAR(255)"/>
+            <column name="bankifsc" type="VARCHAR(255)"/>
+            <column name="passwordhash" type="VARCHAR(255)"/>
+            <column name="username" type="VARCHAR(255)"/>
+            <column name="token" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-8">
+        <createTable tableName="adminrole">
+            <column name="adminid" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="roleid" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-9">
+        <createTable tableName="customer">
+            <column name="customerid" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="customername" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="token" type="VARCHAR(255)"/>
+            <column name="username" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-10">
+        <createTable tableName="otheraccount">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="accountid" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="accountstatus" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="balance" type="FLOAT8"/>
+            <column name="bankifsc" type="VARCHAR(255)"/>
+            <column name="date" type="date"/>
+            <column name="firstname" type="VARCHAR(255)"/>
+            <column name="lastname" type="VARCHAR(255)"/>
+            <column name="remarks" type="VARCHAR(255)"/>
+            <column name="customer_customerid" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-11">
+        <createTable tableName="primarytransaction">
+            <column autoIncrement="true" name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="primarytransaction_pkey"/>
+            </column>
+            <column name="accountid" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="TIMESTAMP(29) WITHOUT TIME ZONE"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="recipientaccountno" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipientname" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="local_date_time" type="TIMESTAMP(29) WITHOUT TIME ZONE"/>
+            <column name="type" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-12">
+        <createTable tableName="proof">
+            <column name="proofid" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dob" type="date"/>
+            <column name="emailid" type="VARCHAR(255)"/>
+            <column name="passportnumber" type="VARCHAR(255)"/>
+            <column name="uuid" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-13">
+        <createTable tableName="role">
+            <column autoIncrement="true" name="roleid" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="role_pkey"/>
+            </column>
+            <column name="rolename" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-14">
+        <createTable tableName="schedule">
+            <column autoIncrement="true" name="scheduleid" type="SERIAL">
+                <constraints primaryKey="true" primaryKeyName="schedule_pkey"/>
+            </column>
+            <column name="accountid" type="BIGINT"/>
+            <column name="amount" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dates" type="TIMESTAMP(29) WITHOUT TIME ZONE"/>
+            <column name="recipientaccountno" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="recipientname" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="type" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-15">
+        <addPrimaryKey columnNames="id" constraintName="account_pkey" tableName="account"/>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-16">
+        <addPrimaryKey columnNames="customerid" constraintName="customer_pkey" tableName="customer"/>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-17">
+        <addPrimaryKey columnNames="id" constraintName="otheraccount_pkey" tableName="otheraccount"/>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-18">
+        <addPrimaryKey columnNames="proofid" constraintName="proof_pkey" tableName="proof"/>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-19">
+        <addUniqueConstraint columnNames="roleid" constraintName="uk_q5t8t2efst0yompkwbbrqqo9i" tableName="adminrole"/>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-20">
+        <addForeignKeyConstraint baseColumnNames="customeridref" baseTableName="account" constraintName="fk8sexuubajhorj7bb8r62lx9l4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="customerid" referencedTableName="customer"/>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-21">
+        <addForeignKeyConstraint baseColumnNames="adminid" baseTableName="adminrole" constraintName="fk9osj3fu191wyt8i4w1nuyiyrj" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="adminid" referencedTableName="admin"/>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-22">
+        <addForeignKeyConstraint baseColumnNames="customer_customerid" baseTableName="otheraccount" constraintName="fkat16tknvmp8ehl602ka53v3or" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="customerid" referencedTableName="customer"/>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-23">
+        <addForeignKeyConstraint baseColumnNames="customer_customerid" baseTableName="account" constraintName="fkccfuscusnt7gr5m0hcxypba4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="customerid" referencedTableName="customer"/>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-24">
+        <addForeignKeyConstraint baseColumnNames="roleid" baseTableName="adminrole" constraintName="fkfpfbaqorn9wke9y33h60jxobb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="roleid" referencedTableName="role"/>
+    </changeSet>
+    <changeSet author="Saurabh (generated)" id="1589378976508-25">
+        <addForeignKeyConstraint baseColumnNames="proofid" baseTableName="account" constraintName="fkq8v5p6k5hsg4o0r6nbak9yp1o" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="proofid" referencedTableName="proof"/>
+    </changeSet>
+</databaseChangeLog>
