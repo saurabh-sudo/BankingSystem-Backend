@@ -4,7 +4,7 @@
 
 
 Technology Used:
-Java, Spring, Spring Batch, Spring Security, PostgreSQL, Microservices, Maven, JUnit, Liquibase
+Java, Spring, Spring Batch, Spring Security, PostgreSQL, Microservices, Maven, JUnit, Liquibase,Fast2SMS
 
 
 Functionalities:
