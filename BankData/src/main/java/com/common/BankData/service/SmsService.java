@@ -18,33 +18,17 @@ public class SmsService {
         try
         {
 
-            String apiKey="8BYCGsX7JiHjTLAn4Zu3NKFb9o1aQpdP6vcrxt5wfD0IghRSU20GiIsnYR8aUuWqo3lS295FBNTbMV6E";
+            String apiKey="Your API Key here";
             String sendId="FSTSMS";
-            //important step...
-      //      username= URLEncoder.encode(username, "UTF-8");
+
             String language="english";
             String route="qt";
 
-          //  String myUrl="https://www.fast2sms.com/dev/quick-templates?authorization="+apiKey;
-        //  String myUrl="https://www.fast2sms.com/dev/bulk?authorization="+apiKey+"&sender_id="+sendId+"&message="+message+"&language="+language+"&route="+route+"&numbers="+number;
-
-        //    {AA}|{CC}&variables_values=12345|asdaswdx
-      //      https://www.fast2sms.com/dev/bulk?authorization=8BYCGsX7JiHjTLAn4Zu3NKFb9o1aQpdP6vcrxt5wfD0IghRSU20GiIsnYR8aUuWqo3lS295FBNTbMV6E&sender_id=FSTSMS&language=english&route=qt&numbers=8082077130&message=27274&variables={BB}&variables_values=[C@6fbce600
-
-            String myUrl="https://www.fast2sms.com/dev/bulk?authorization="+apiKey+"&sender_id="+sendId+"&language="+language+"&route="+route+"&numbers="+number+"&message="+27480+"&variables={AA}|{BB}&variables_values="+username+ '|'+password;
-
-
-            //sending get request using java..
+             String myUrl="https://www.fast2sms.com/dev/bulk?authorization="+apiKey+"&sender_id="+sendId+"&language="+language+"&route="+route+"&numbers="+number+"&message="+27480+"&variables={AA}|{BB}&variables_values="+username+ '|'+password;
+             //sending get request using java..
 
             URL url=new URL(myUrl);
-//
-//            'https://www.fast2sms.com/dev/bulk?authorization=YOUR_API_KEY&sender_id=FSTSMS&language=english&
-//        route=qt&numbers=9999999999,8888888888,7777777777&message=YOUR_QT_TEMPLATE_ID&variables={AA}|{CC}&variables_values=12345|asdaswdx' \
-
-
             HttpsURLConnection con=(HttpsURLConnection)url.openConnection();
-
-
             con.setRequestMethod("GET");
 
             con.setRequestProperty("User-Agent", "Mozilla/5.0");

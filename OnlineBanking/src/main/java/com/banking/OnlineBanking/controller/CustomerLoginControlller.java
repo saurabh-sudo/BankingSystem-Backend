@@ -59,15 +59,12 @@ public class CustomerLoginControlller {
 
         }
         decodedAuth = new String(bytes);
-        System.out.println("asd"+decodedAuth);
-
         String username = decodedAuth.split(":")[0];
         long userId = Long.parseLong(username);
 
         String enteredPassword = decodedAuth.split(":")[1];
         username=username.toLowerCase();
 
-        System.out.println(username);
         Customer customer = customerDao.findByUserId(userId);
         if(customer==null)
         {

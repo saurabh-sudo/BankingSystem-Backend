@@ -84,7 +84,6 @@ DataSource datasource;
     @Bean
     public JdbcCursorItemReader<Schedule> reader() throws PropertyVetoException {
         Date today = new Date();
-        System.out.println("ehsf");
         JdbcCursorItemReader<Schedule> reader = new JdbcCursorItemReader<Schedule>();
         reader.setDataSource(datasource);
         reader.setSql("SELECT scheduleid,accountid,amount,dates,recipientaccountno,recipientName,status,type FROM schedule");

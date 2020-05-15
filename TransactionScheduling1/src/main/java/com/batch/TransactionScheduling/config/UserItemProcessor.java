@@ -10,7 +10,6 @@ public class UserItemProcessor implements ItemProcessor<Schedule, Schedule> {
 
     @Override
     public Schedule process(Schedule user) throws Exception {
-        System.out.println("proxess"+user);
         return user;
     }
 

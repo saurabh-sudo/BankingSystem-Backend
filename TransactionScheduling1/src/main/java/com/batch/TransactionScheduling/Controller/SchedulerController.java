@@ -43,11 +43,10 @@ public class SchedulerController {
         JobParameters parameters = new JobParameters(maps);
         JobExecution jobExecution = jobLauncher.run(loadJob, parameters);
 
-        System.out.println("JobExecution: " + jobExecution.getStatus());
+
 
         System.out.println("Batch is Running...");
         while (jobExecution.isRunning()) {
-//            System.out.println("...");
         }
 
         return jobExecution.getStatus();

@@ -1,7 +1,6 @@
 package com.batch.TransactionScheduling.config;
 
 
-
 import com.common.BankData.dao.AccountDao;
 
 import com.common.BankData.dao.ScheduleDao;
@@ -36,47 +35,39 @@ public class DBWriter implements ItemWriter<Schedule> {
     TransferService transferService;
 
 
-
     @Override
     @Transactional
     public void write(List<? extends Schedule> list) throws Exception {
-        List<Schedule> ad= (List<Schedule>) list;
+        List<Schedule> ad = (List<Schedule>) list;
         Date today = new Date();
-        for (Schedule sd:ad
-             ) {
-            if(DateUtils.isSameDay(today,sd.getDates()))
-            {
+        for (Schedule sd : ad
+        ) {
+            if (DateUtils.isSameDay(today, sd.getDates())) {
 
                 long recipient = sd.getRecipientAccountNo();
                 Account recipientAccount = accountDao.findByAccountId(recipient);
                 Account primaryAccount = accountDao.findByAccountId(sd.getAccountId());
-                PrimaryTransaction pt=new PrimaryTransaction(today,"Scheduled Transaction","null",sd.getAmount(),sd.getRecipientName() ,sd.getRecipientAccountNo(),sd.getAccountId(),null,sd.getType());
+                PrimaryTransaction pt = new PrimaryTransaction(today, "Scheduled Transaction", "null", sd.getAmount(), sd.getRecipientName(), sd.getRecipientAccountNo(), sd.getAccountId(), null, sd.getType());
                 pt.setDate(today);
                 if (recipientAccount != null) {
-                    Boolean b=transferService.addMoneyToRecipient(recipientAccount, primaryAccount, sd.getAmount(), pt);
-                    if (b)
-                    {
-                        System.out.println("delete by id"+sd.getScheduleid());
-                     //   transferService.deleteASchedule(sd);
+                    Boolean b = transferService.addMoneyToRecipient(recipientAccount, primaryAccount, sd.getAmount(), pt);
+                    if (b) {
 
-               sd.setStatus("completed");
-               transferService.deleteASchedule(sd);
-                    }
-                    else
-                    {
+                        sd.setStatus("completed");
+                        transferService.deleteASchedule(sd);
+                    } else {
                         sd.setStatus("failed");
-                         scheduleDao.save(sd);
+                        scheduleDao.save(sd);
                     }
 
                 }
 
-            }
-            else {
+            } else {
                 continue;
 
             }
 
-          //  userRepository.save(sd);
+            //  userRepository.save(sd);
         }
 
 

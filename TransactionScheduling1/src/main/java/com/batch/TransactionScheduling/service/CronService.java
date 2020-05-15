@@ -1,8 +1,6 @@
 package com.batch.TransactionScheduling.service;
 
 
-
-
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
@@ -27,7 +25,7 @@ public class CronService {
     @Autowired
     Job loadJob;
 
- @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 60000)
     public BatchStatus load() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
 
 
@@ -36,11 +34,9 @@ public class CronService {
         JobParameters parameters = new JobParameters(maps);
         JobExecution jobExecution = jobLauncher.run(loadJob, parameters);
 
-        System.out.println("JobExecution: " + jobExecution.getStatus());
 
         System.out.println("Batch is Running...");
         while (jobExecution.isRunning()) {
-//            System.out.println("...");
         }
 
         return jobExecution.getStatus();

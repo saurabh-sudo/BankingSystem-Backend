@@ -23,23 +23,13 @@ public class TestUtils {
 	}
 
 	public static String objectToJson(Object obj) {
-//		Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
-//
-		System.out.println("helo"+obj);
 		Gson gson = new Gson();
 		return gson.toJson(obj);
 	}
 
 	public static <T> T jsonToObject(String json, Class<T> classOf) {
 		Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-	//	Gson gson = new Gson();
-//		Gson gson1=  new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-//
-//		String date = "\"2013-02-10T13:45:30+0100\"";
-//		Date test = gson.fromJson(date, Date.class);
-//		System.out.println("date:" + test);
-//
-//		System.out.println("helo 23"+json);
+
 		return gson.fromJson(json, classOf);
 	}
 }

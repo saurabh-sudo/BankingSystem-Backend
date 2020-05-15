@@ -43,7 +43,7 @@ public class TransferService {
     @Transactional
     public Boolean addMoneyToRecipient(Account recipientAccount, Account primaryAccount, double amount, PrimaryTransaction transaction) throws Exception {
 
-        System.out.println("addmoney");
+
         try {
             double moneyPresent = primaryAccount.getBalance() - amount;
             if (moneyPresent > 0) {
