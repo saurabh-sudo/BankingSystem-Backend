@@ -22,7 +22,7 @@ Functionalities:
 
 Working of Every Module:
 
-## Backffice System:
+## Backoffice System:
 
 1.  Admin would have two roles -Capturer and Authoriser.
 ```bash
