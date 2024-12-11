@@ -6,7 +6,6 @@ import org.springframework.batch.core.repository.JobExecutionAlreadyRunningExcep
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,21 +18,19 @@ import java.util.Map;
 public class SchedulerController {
 
     @Autowired
+    Job loadJob;
+    @Autowired
     private JobLauncher jobLauncher;
 
-    @Autowired
-    Job loadJob;
-
     @GetMapping("sf")
-    public String sf()
-    {
+    public String sf() {
         return "helo";
     }
 
 /*   @Autowired
    Job exportUserJob ;*/
 
-//  @Scheduled(fixedRate = 20000)
+    //  @Scheduled(fixedRate = 20000)
     @GetMapping("/hello")
     public BatchStatus load() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
 
@@ -42,7 +39,6 @@ public class SchedulerController {
         maps.put("time", new JobParameter(System.currentTimeMillis()));
         JobParameters parameters = new JobParameters(maps);
         JobExecution jobExecution = jobLauncher.run(loadJob, parameters);
-
 
 
         System.out.println("Batch is Running...");

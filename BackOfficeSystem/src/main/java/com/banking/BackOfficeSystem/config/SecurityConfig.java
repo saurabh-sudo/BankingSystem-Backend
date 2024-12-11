@@ -20,6 +20,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
+import java.io.IOException;
+
 
 @Configuration
 @EnableWebSecurity
@@ -27,10 +29,17 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final RequestMatcher PROTECTED_URLS = new OrRequestMatcher(
+            new AntPathRequestMatcher("/accounts/**")
+    );
+    AuthenticationProvider provider;
     @Autowired
     private UserSecurityService userSecurityService;
 
-    AuthenticationProvider provider;
+    public SecurityConfig(final AuthenticationProvider authenticationProvider) {
+        super();
+        this.provider = authenticationProvider;
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -47,22 +56,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         };
     }
 
-    private static final RequestMatcher PROTECTED_URLS = new OrRequestMatcher(
-            new AntPathRequestMatcher("/accounts/**")
-    );
-
-
     @Bean
-    AuthenticationFilter authenticationFilter() throws Exception {
+    AuthenticationFilter authenticationFilter() {
         final AuthenticationFilter filter = new AuthenticationFilter(PROTECTED_URLS);
-        filter.setAuthenticationManager(authenticationManager());
-        return filter;
-    }
+//        filter.setAuthenticationManager(authenticationManager());
+        throw new StackOverflowError();
+//        return filter;
 
-
-    public SecurityConfig(final AuthenticationProvider authenticationProvider) {
-        super();
-        this.provider = authenticationProvider;
     }
 
     @Override

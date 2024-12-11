@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
     <changeSet author="Saurabh (generated)" id="1589378976508-1">
         <createSequence sequenceName="admin_adminid_seq"/>
     </changeSet>
@@ -14,6 +16,10 @@
     </changeSet>
     <changeSet author="Saurabh (generated)" id="1589378976508-5">
         <createSequence sequenceName="schedule_scheduleid_seq"/>
+    </changeSet>
+
+    <changeSet author="Saurabh (generated)" id="1589378976508-6">
+        <createSequence sequenceName="username"/>
     </changeSet>
     <changeSet author="Saurabh (generated)" id="1589378976508-6">
         <createTable tableName="account">
@@ -173,21 +179,39 @@
         <addUniqueConstraint columnNames="roleid" constraintName="uk_q5t8t2efst0yompkwbbrqqo9i" tableName="adminrole"/>
     </changeSet>
     <changeSet author="Saurabh (generated)" id="1589378976508-20">
-        <addForeignKeyConstraint baseColumnNames="customeridref" baseTableName="account" constraintName="fk8sexuubajhorj7bb8r62lx9l4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="customerid" referencedTableName="customer"/>
+        <addForeignKeyConstraint baseColumnNames="customeridref" baseTableName="account"
+                                 constraintName="fk8sexuubajhorj7bb8r62lx9l4" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="customerid" referencedTableName="customer"/>
     </changeSet>
     <changeSet author="Saurabh (generated)" id="1589378976508-21">
-        <addForeignKeyConstraint baseColumnNames="adminid" baseTableName="adminrole" constraintName="fk9osj3fu191wyt8i4w1nuyiyrj" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="adminid" referencedTableName="admin"/>
+        <addForeignKeyConstraint baseColumnNames="adminid" baseTableName="adminrole"
+                                 constraintName="fk9osj3fu191wyt8i4w1nuyiyrj" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="adminid" referencedTableName="admin"/>
     </changeSet>
     <changeSet author="Saurabh (generated)" id="1589378976508-22">
-        <addForeignKeyConstraint baseColumnNames="customer_customerid" baseTableName="otheraccount" constraintName="fkat16tknvmp8ehl602ka53v3or" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="customerid" referencedTableName="customer"/>
+        <addForeignKeyConstraint baseColumnNames="customer_customerid" baseTableName="otheraccount"
+                                 constraintName="fkat16tknvmp8ehl602ka53v3or" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="customerid" referencedTableName="customer"/>
     </changeSet>
     <changeSet author="Saurabh (generated)" id="1589378976508-23">
-        <addForeignKeyConstraint baseColumnNames="customer_customerid" baseTableName="account" constraintName="fkccfuscusnt7gr5m0hcxypba4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="customerid" referencedTableName="customer"/>
+        <addForeignKeyConstraint baseColumnNames="customer_customerid" baseTableName="account"
+                                 constraintName="fkccfuscusnt7gr5m0hcxypba4" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="customerid" referencedTableName="customer"/>
     </changeSet>
     <changeSet author="Saurabh (generated)" id="1589378976508-24">
-        <addForeignKeyConstraint baseColumnNames="roleid" baseTableName="adminrole" constraintName="fkfpfbaqorn9wke9y33h60jxobb" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="roleid" referencedTableName="role"/>
+        <addForeignKeyConstraint baseColumnNames="roleid" baseTableName="adminrole"
+                                 constraintName="fkfpfbaqorn9wke9y33h60jxobb" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="roleid" referencedTableName="role"/>
     </changeSet>
     <changeSet author="Saurabh (generated)" id="1589378976508-25">
-        <addForeignKeyConstraint baseColumnNames="proofid" baseTableName="account" constraintName="fkq8v5p6k5hsg4o0r6nbak9yp1o" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="proofid" referencedTableName="proof"/>
+        <addForeignKeyConstraint baseColumnNames="proofid" baseTableName="account"
+                                 constraintName="fkq8v5p6k5hsg4o0r6nbak9yp1o" deferrable="false"
+                                 initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+                                 referencedColumnNames="proofid" referencedTableName="proof"/>
     </changeSet>
 </databaseChangeLog>

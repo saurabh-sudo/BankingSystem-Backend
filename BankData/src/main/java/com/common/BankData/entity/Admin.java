@@ -1,51 +1,42 @@
 package com.common.BankData.entity;
 
 
-
-
 import com.common.BankData.entity.security.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.persistence.GeneratedValue;
 import java.util.List;
 
 @Entity
-public class Admin{
+public class Admin {
 
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "adminRole", joinColumns = @JoinColumn(name = "adminid"), inverseJoinColumns = @JoinColumn(name = "roleid"))
+    public List<Role> adminRole;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long adminId;
-
-    @Column(name="adminName")
+    @Column(name = "adminName")
     private String adminName;
-    private  String userName;
-
-    public Admin() {
-
-    }
-
-    @OneToMany(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinTable(name = "adminRole", joinColumns = @JoinColumn(name = "adminid"), inverseJoinColumns = @JoinColumn(name = "roleid"))
-    public List<Role> adminRole;
-
-//    @OneToMany(mappedBy = "admin", cascade=CascadeType.ALL,fetch = FetchType.EAGER)
+    private String userName;
+    //    @OneToMany(mappedBy = "admin", cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 //    @JsonIgnore
 //    public List<AdminRole> adminRole;
     private String passwordHash;
     private String bankIFSC;
-private String token;
+    private String token;
+    public Admin() {
+
+    }
+
     public Admin(Admin o) {
-        this.adminId=o.adminId;
-        this.adminName=o.adminName;
-        this.adminRole=o.adminRole;
-        this.userName=o.userName;
-        this.bankIFSC=o.bankIFSC;
-        this.passwordHash=o.passwordHash;
-        this.token=o.token;
+        this.adminId = o.adminId;
+        this.adminName = o.adminName;
+        this.adminRole = o.adminRole;
+        this.userName = o.userName;
+        this.bankIFSC = o.bankIFSC;
+        this.passwordHash = o.passwordHash;
+        this.token = o.token;
     }
 
 
@@ -69,16 +60,16 @@ private String token;
         return adminName;
     }
 
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
+    }
+
     public List<Role> getAdminRole() {
         return adminRole;
     }
 
     public void setAdminRole(List<Role> adminRole) {
         this.adminRole = adminRole;
-    }
-
-    public void setAdminName(String adminName) {
-        this.adminName = adminName;
     }
 
     public String getUserName() {
@@ -120,7 +111,6 @@ private String token;
 //        adminRole.forEach(ur -> authorities.add(new Authority(ur.getRoleName())));
 //        return authorities;
 //    }
-
 
 
 }

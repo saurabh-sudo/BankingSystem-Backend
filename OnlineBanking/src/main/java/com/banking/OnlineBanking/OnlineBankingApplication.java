@@ -14,8 +14,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Import({XConfiguration.class, BankDataApplication.class})
 public class OnlineBankingApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(OnlineBankingApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(OnlineBankingApplication.class, args);
+    }
 
 }

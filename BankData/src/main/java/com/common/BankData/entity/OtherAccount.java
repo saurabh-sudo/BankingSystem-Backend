@@ -1,7 +1,6 @@
 package com.common.BankData.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.Nullable;
 
 import javax.persistence.*;
@@ -23,8 +22,8 @@ public class OtherAccount {
 //    private int age=0;
 
     //@DefaultValue("0.0")
-    @Column(name="balance")
-    private double balance=0.0f;
+    @Column(name = "balance")
+    private double balance = 0.0f;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date date;
@@ -40,6 +39,15 @@ public class OtherAccount {
 
     @ManyToOne
     private Customer customer;
+    @Nullable
+    private long accountId;
+    private String remarks;
+
+    public OtherAccount(double balance, Date date, long accountId) {
+        this.balance = balance;
+        this.date = date;
+        this.accountId = accountId;
+    }
 
     public Customer getCustomer() {
         return customer;
@@ -48,11 +56,6 @@ public class OtherAccount {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-
-    @Nullable
-    private long accountId;
-
-    private String remarks;
 
     public long getId() {
         return id;
@@ -70,19 +73,12 @@ public class OtherAccount {
         this.accountId = accountId;
     }
 
-
     public String getBankIfsc() {
         return bankIfsc;
     }
 
     public void setBankIfsc(String bankIfsc) {
         this.bankIfsc = bankIfsc;
-    }
-
-    public OtherAccount(double balance, Date date, long accountId) {
-        this.balance = balance;
-        this.date = date;
-        this.accountId = accountId;
     }
 
 //    public List<PrimaryTransaction> getPrimaryTransactionList() {

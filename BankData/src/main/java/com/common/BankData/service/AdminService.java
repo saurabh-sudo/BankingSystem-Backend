@@ -12,7 +12,7 @@ public class AdminService {
     AdminDao adminDao;
 
     public Admin findByToken(String token) {
-        Admin admin= adminDao.findByToken(token);
+        Admin admin = adminDao.findByToken(token);
         return admin;
     }
 }

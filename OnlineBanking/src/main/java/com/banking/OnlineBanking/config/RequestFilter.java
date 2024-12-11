@@ -19,12 +19,11 @@ public class RequestFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpServletRequest request = (HttpServletRequest) req;
 
-            if (BACKOFFICE_URL.equals(request.getHeader("Origin"))) {
-                response.setHeader("Access-Control-Allow-Origin", BACKOFFICE_URL);
-            } else if (ONLINEBANKING_URL.equals(request.getHeader("Origin"))) {
-                response.setHeader("Access-Control-Allow-Origin", ONLINEBANKING_URL);
-            }
-
+        if (BACKOFFICE_URL.equals(request.getHeader("Origin"))) {
+            response.setHeader("Access-Control-Allow-Origin", BACKOFFICE_URL);
+        } else if (ONLINEBANKING_URL.equals(request.getHeader("Origin"))) {
+            response.setHeader("Access-Control-Allow-Origin", ONLINEBANKING_URL);
+        }
 
 
 //        response.setHeader("Access-Control-Allow-Origin", "http://localhost:8082");  //8081
@@ -37,7 +36,7 @@ public class RequestFilter implements Filter {
         if (!(request.getMethod().equalsIgnoreCase("OPTIONS"))) {
             try {
                 chain.doFilter(req, res);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
@@ -51,8 +50,10 @@ public class RequestFilter implements Filter {
 
     }
 
-    public void init(FilterConfig filterConfig) {}
+    public void init(FilterConfig filterConfig) {
+    }
 
-    public void destroy() {}
+    public void destroy() {
+    }
 
 }

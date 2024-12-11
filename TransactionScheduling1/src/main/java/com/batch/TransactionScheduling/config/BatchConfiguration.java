@@ -1,7 +1,6 @@
 package com.batch.TransactionScheduling.config;
 
 
-
 import com.common.BankData.entity.Schedule;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -19,28 +18,21 @@ import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
-import org.springframework.core.annotation.Order;
-import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
-import javax.ws.rs.Produces;
 import java.beans.PropertyVetoException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.Date;
 
 
 @Configuration
 @EnableBatchProcessing
-public class BatchConfiguration  extends DefaultBatchConfigurer {
-
+public class BatchConfiguration extends DefaultBatchConfigurer {
 
 
 //    @Autowired
@@ -59,27 +51,23 @@ public class BatchConfiguration  extends DefaultBatchConfigurer {
 //        return dataSource;
 //    }
 
+    @Autowired
+    public JobBuilderFactory jobBuilderFactory;
+    @Autowired
+    public StepBuilderFactory stepBuilderFactory;
+    @Autowired
+    DataSource datasource;
+    @Autowired
+    JpaTransactionManager trxm;
+    @Autowired
+    DBWriter dbWriter;
+
     @Override
     protected JobRepository createJobRepository() throws Exception {
         MapJobRepositoryFactoryBean factoryBean = new MapJobRepositoryFactoryBean();
         factoryBean.afterPropertiesSet();
         return factoryBean.getObject();
     }
-
-    @Autowired
-    public JobBuilderFactory jobBuilderFactory;
-
-    @Autowired
-    public StepBuilderFactory stepBuilderFactory;
-
-@Autowired
-DataSource datasource;
-
-
-
-    @Autowired
-    JpaTransactionManager trxm;
-
 
     @Bean
     public JdbcCursorItemReader<Schedule> reader() throws PropertyVetoException {
@@ -92,8 +80,46 @@ DataSource datasource;
         return reader;
     }
 
+    @Bean
+    public UserItemProcessor processor() {
+        return new UserItemProcessor();
+    }
 
-    public class UserRowMapper implements RowMapper<Schedule>{
+    @Bean
+    public FlatFileItemWriter<Schedule> writer() {
+
+        FlatFileItemWriter<Schedule> writer = new FlatFileItemWriter<Schedule>();
+        writer.setResource(new ClassPathResource("users.csv"));
+        writer.setLineAggregator(new DelimitedLineAggregator<Schedule>() {{
+            setDelimiter(",");
+            setFieldExtractor(new BeanWrapperFieldExtractor<Schedule>() {{
+                setNames(new String[]{"id", "name"});
+            }});
+        }});
+
+        return writer;
+    }
+
+    @Bean
+    public Step step1() throws PropertyVetoException {
+        return stepBuilderFactory.get("step1").transactionManager(trxm).<Schedule, Schedule>chunk(10)
+                .reader(reader())
+                .processor(processor())
+                .writer(dbWriter)
+                .build();
+    }
+
+    @Bean
+    @Transactional
+    public Job exportUserJob() throws PropertyVetoException {
+        return jobBuilderFactory.get("exportUserJob")
+                .incrementer(new RunIdIncrementer())
+                .flow(step1())
+                .end()
+                .build();
+    }
+
+    public class UserRowMapper implements RowMapper<Schedule> {
 
         @Override
         public Schedule mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -110,49 +136,6 @@ DataSource datasource;
             return schedule;
         }
 
-    }
-
-    @Bean
-    public UserItemProcessor processor(){
-        return new UserItemProcessor();
-    }
-
-    @Autowired
-    DBWriter dbWriter;
-
-    @Bean
-    public FlatFileItemWriter<Schedule> writer(){
-
-        FlatFileItemWriter<Schedule> writer = new FlatFileItemWriter<Schedule>();
-        writer.setResource(new ClassPathResource("users.csv"));
-        writer.setLineAggregator(new DelimitedLineAggregator<Schedule>() {{
-            setDelimiter(",");
-            setFieldExtractor(new BeanWrapperFieldExtractor<Schedule>() {{
-                setNames(new String[] { "id", "name" });
-            }});
-        }});
-
-        return writer;
-    }
-
-
-    @Bean
-    public Step step1() throws PropertyVetoException {
-        return stepBuilderFactory.get("step1").transactionManager(trxm).<Schedule, Schedule> chunk(10)
-                .reader(reader())
-                .processor(processor())
-                .writer(dbWriter)
-                .build();
-    }
-
-    @Bean
-    @Transactional
-    public Job exportUserJob() throws PropertyVetoException {
-        return jobBuilderFactory.get("exportUserJob")
-                .incrementer(new RunIdIncrementer())
-                .flow(step1())
-                .end()
-                .build();
     }
 
 }
