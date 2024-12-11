@@ -15,19 +15,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserSecurityService implements UserDetailsService {
 
-	/** The application logger */
-	private static final Logger LOG = LoggerFactory.getLogger(UserSecurityService.class);
+    /**
+     * The application logger
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(UserSecurityService.class);
 
-	@Autowired
-	private CustomerDao customerDao;
+    @Autowired
+    private CustomerDao customerDao;
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Customer user = customerDao.findByUserNameContainingIgnoreCase(username);
-		if (user == null) {
-			LOG.warn("Username {} not found", username);
-			throw new UsernameNotFoundException("Username " + username + " not found");
-		}
-		return new CustomCustomerDetails(user);
-	}
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Customer user = customerDao.findByUserNameContainingIgnoreCase(username);
+        if (user == null) {
+            LOG.warn("Username {} not found", username);
+            throw new UsernameNotFoundException("Username " + username + " not found");
+        }
+        return new CustomCustomerDetails(user);
+    }
 }

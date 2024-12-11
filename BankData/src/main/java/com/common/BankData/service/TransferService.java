@@ -12,11 +12,7 @@ import com.common.BankData.entity.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.ObjectUtils;
 
-
-import javax.persistence.PersistenceUnit;
-import javax.transaction.TransactionScoped;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -37,9 +33,6 @@ public class TransferService {
     ScheduleDao scheduleDao;
 
 
-
-
-
     @Transactional
     public Boolean addMoneyToRecipient(Account recipientAccount, Account primaryAccount, double amount, PrimaryTransaction transaction) throws Exception {
 
@@ -58,10 +51,10 @@ public class TransferService {
                 Date d = new Date();
                 Instant instant = Instant.now();
 
-                LocalDateTime ld=LocalDateTime.now(Clock.systemUTC());
+                LocalDateTime ld = LocalDateTime.now(Clock.systemUTC());
 
                 PrimaryTransaction pt = new PrimaryTransaction(d, transaction.getDescription(), "completed", transaction.getAmount(),
-                        transaction.getRecipientName(), transaction.getRecipientAccountNo(), transaction.getAccountId(),ld,transaction.getType());
+                        transaction.getRecipientName(), transaction.getRecipientAccountNo(), transaction.getAccountId(), ld, transaction.getType());
 
                 transferDao.save(pt);
                 return true;
@@ -73,7 +66,7 @@ public class TransferService {
         return false;
     }
 
- @Transactional
+    @Transactional
     public Boolean addMoneyToRecipientOfAnotherBank(OtherAccount recipientAccount, Account primaryAccount, double amount, PrimaryTransaction transaction) throws Exception {
 
 
@@ -91,10 +84,10 @@ public class TransferService {
                 Date d = new Date();
                 Instant instant = Instant.now();
 
-                LocalDateTime ld=LocalDateTime.now(Clock.systemUTC());
+                LocalDateTime ld = LocalDateTime.now(Clock.systemUTC());
 
                 PrimaryTransaction pt = new PrimaryTransaction(d, transaction.getDescription(), "completed", transaction.getAmount(),
-                        transaction.getRecipientName(), transaction.getRecipientAccountNo(), transaction.getAccountId(),ld,transaction.getType());
+                        transaction.getRecipientName(), transaction.getRecipientAccountNo(), transaction.getAccountId(), ld, transaction.getType());
 
                 transferDao.save(pt);
                 return true;
@@ -107,11 +100,11 @@ public class TransferService {
     }
 
     public Set<PrimaryTransaction> getTransactionHistoryByAccountID(long accountId) {
-        List<PrimaryTransaction> transactionList=new ArrayList<>();
-        Set<PrimaryTransaction> trans=new HashSet<>();
-        Set<PrimaryTransaction> trans1=new HashSet<>();
-        trans=transferDao.findByAccountId(accountId);
-        trans1=transferDao.findByRecipientAccountNo(accountId);
+        List<PrimaryTransaction> transactionList = new ArrayList<>();
+        Set<PrimaryTransaction> trans = new HashSet<>();
+        Set<PrimaryTransaction> trans1 = new HashSet<>();
+        trans = transferDao.findByAccountId(accountId);
+        trans1 = transferDao.findByRecipientAccountNo(accountId);
         trans.addAll(trans1);
 
 //        transactionList=transferDao.findByAccountId(accountId);
@@ -133,12 +126,11 @@ public class TransferService {
         return trans;
 
 
-
     }
 
 
     public void deleteASchedule(Schedule sd) {
 
-       int a=scheduleDao.removeByScheduleid(sd.getScheduleid());
+        int a = scheduleDao.removeByScheduleid(sd.getScheduleid());
     }
 }

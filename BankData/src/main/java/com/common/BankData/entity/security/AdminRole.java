@@ -1,9 +1,6 @@
 package com.common.BankData.entity.security;
 
 
-
-import javax.persistence.*;
-
 //
 ////@Entity
 ////@Table

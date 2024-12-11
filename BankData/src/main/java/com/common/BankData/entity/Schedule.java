@@ -1,13 +1,10 @@
 package com.common.BankData.entity;
 
-import com.sun.istack.Nullable;
-
 import javax.persistence.*;
-import java.time.*;
 import java.util.Date;
 
 
-@Entity(name="schedule")
+@Entity(name = "schedule")
 public class Schedule {
 
     @Id
@@ -16,40 +13,15 @@ public class Schedule {
     private Date dates;
     private long recipientAccountNo;
     private String status;
-    private  String recipientName;
+    private String recipientName;
     private double amount;
 
     private String schedule_type;
-
-    public String getSchedule_type() {
-        return schedule_type;
-    }
-
-    public void setSchedule_type(String schedule_type) {
-        this.schedule_type = schedule_type;
-    }
-
     private String type;
-
-    public Schedule() {
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
     @Column(nullable = true)
     private long accountId;
 
-    public long getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(long accountId) {
-        this.accountId = accountId;
+    public Schedule() {
     }
 
     public Schedule(int scheduleid, Date dates, long recipientAccountNo, String status, String recipientName, double amount, String type, long accountId) {
@@ -60,6 +32,30 @@ public class Schedule {
         this.recipientName = recipientName;
         this.amount = amount;
         this.type = type;
+        this.accountId = accountId;
+    }
+
+    public String getSchedule_type() {
+        return schedule_type;
+    }
+
+    public void setSchedule_type(String schedule_type) {
+        this.schedule_type = schedule_type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(long accountId) {
         this.accountId = accountId;
     }
 

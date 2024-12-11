@@ -3,18 +3,17 @@ package com.common.BankData.entity;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.security.AccessControlContext;
 import java.util.Set;
 
 @Entity
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO )
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long customerId;
     private String customerName;
-//    private long accountId;
-    private  String userName;
+    //    private long accountId;
+    private String userName;
     private String password;
 
     @ColumnDefault("0")
@@ -27,14 +26,13 @@ public class Customer {
     private String token;
 
     public Customer(final Customer o) {
-        this.customerId=o.customerId;
-        this.customerName=o.customerName;
-        this.userName=o.userName;
-        this.password=o.password;
-        this.token=o.token;
-      //  this.accountId=o.accountId;
-        this.accounts=o.accounts;
-
+        this.customerId = o.customerId;
+        this.customerName = o.customerName;
+        this.userName = o.userName;
+        this.password = o.password;
+        this.token = o.token;
+        //  this.accountId=o.accountId;
+        this.accounts = o.accounts;
 
 
     }
@@ -43,7 +41,7 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(long customerId, String customerName, String userName, String password, Set<Account> accounts, String token,long userId) {
+    public Customer(long customerId, String customerName, String userName, String password, Set<Account> accounts, String token, long userId) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.userName = userName;
@@ -52,14 +50,15 @@ public class Customer {
         this.token = token;
         this.userId = userId;
     }
+
     //this constructor is used to create a new Customer, when the account of that particular user is approved
-    public Customer(String customerName, String userName, String password, Set<Account> accounts, String token,long userId) {
+    public Customer(String customerName, String userName, String password, Set<Account> accounts, String token, long userId) {
         this.customerName = customerName;
         this.userName = userName;
         this.password = password;
         this.accounts = accounts;
         this.token = token;
-        this.userId=userId;
+        this.userId = userId;
     }
 
     public long getUserId() {

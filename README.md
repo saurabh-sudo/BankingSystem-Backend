@@ -2,29 +2,30 @@
 
 ## Accounting System
 
-
 Technology Used:
 Java, Spring, Spring Batch, Spring Security, PostgreSQL, Microservices, Maven, JUnit, Liquibase,Fast2SMS
 
-
 Functionalities:
 
-⦁	Spring: Forms the Outline of Whole project.
+⦁ Spring: Forms the Outline of Whole project.
 
-⦁	Spring Security: Basic Authentication mechanism on login and Token Based Authentication for every subsequent call from the User Interface.
+⦁ Spring Security: Basic Authentication mechanism on login and Token Based Authentication for every subsequent call from
+the User Interface.
 
-⦁	Junit: Unit Testing and Integration Testing available for Online Customer System.
+⦁ Junit: Unit Testing and Integration Testing available for Online Customer System.
 
-⦁	Spring Batch: As there are scenarios where payments needs to be done on any scheduled date and multiple Transaction to be done in a single day(Eg. payment of Salaries), I have used Spring batch to ease up the Stress on the application environment.
+⦁ Spring Batch: As there are scenarios where payments needs to be done on any scheduled date and multiple Transaction to
+be done in a single day(Eg. payment of Salaries), I have used Spring batch to ease up the Stress on the application
+environment.
 
-⦁	Liquibase: Used for Managing database Entries.
-
+⦁ Liquibase: Used for Managing database Entries.
 
 Working of Every Module:
 
 ## Backoffice System:
 
-1.  Admin would have two roles -Capturer and Authoriser.
+1. Admin would have two roles -Capturer and Authoriser.
+
 ```bash
 
   a.  Capturer would be responsible for feeding the details of prospect customer into the System,
@@ -40,9 +41,9 @@ Working of Every Module:
       which needs to be manually entered into the database at this point of time.
   
   ```
- 
- ## BankData:
- 
+
+## BankData:
+
  ```bash
  1.   BankData is a jar which which is used in other three projects. 
  
@@ -52,11 +53,11 @@ Working of Every Module:
       
       BankData is based on following DRY(Do not repeat Yourself) principle.
   ```
-  
- ## OnlineBanking:
- 
- 1.   This Module is for Customer Facing Application. In this Customer would be able to perform many functions.Eg.
- 
+
+## OnlineBanking:
+
+1. This Module is for Customer Facing Application. In this Customer would be able to perform many functions.Eg.
+
     a. Login into their own account using credentials received through SMS.
     
     b. Check the Balance on their Account.
@@ -64,9 +65,9 @@ Working of Every Module:
     c. View Transaction History on all the Transaction Done till the current date.
     
     d. Schedule a Transaction(Future-Dated)
-    
- ## TransactionScheduling:
- 
+
+## TransactionScheduling:
+
 ```
  1.   This Module is a Spring Batch Application which runs in the background, 
  
@@ -76,5 +77,5 @@ Working of Every Module:
       
       write the transaction log to the database.
 ```
- 
- Thank You!
+
+Thank You!

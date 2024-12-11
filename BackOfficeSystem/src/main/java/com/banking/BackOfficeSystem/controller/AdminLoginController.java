@@ -10,11 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sun.misc.BASE64Decoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.util.Base64;
 import java.util.UUID;
 
 
@@ -26,20 +25,13 @@ public class AdminLoginController {
     AdminDao adminDao;
 
     @PostMapping("/secured/token")
-    public ResponseEntity generateToken(@RequestHeader("Authorization") String authString, HttpServletRequest rs, HttpServletResponse res) throws Exception {
+    public ResponseEntity generateToken(@RequestHeader("Authorization") String authString) throws Exception {
         System.out.println(authString);
         String decodedAuth = "";
         String[] authParts = authString.split("\\s+");
         String authInfo = authParts[1];
         byte[] bytes = null;
-        try {
-            bytes = new BASE64Decoder().decodeBuffer(authInfo);
-        } catch (IOException e) {
-            e.printStackTrace();
-            // TODO Auto-generated catch block
-            return new ResponseEntity<>("BAD REQUEST", new HttpHeaders(), HttpStatus.BAD_REQUEST);
-
-        }
+        bytes = Base64.getDecoder().decode(authInfo);
         decodedAuth = new String(bytes);
         System.out.println(decodedAuth);
 

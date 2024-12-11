@@ -1,19 +1,13 @@
 package com.common.BankData.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.Nullable;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
-import javax.validation.constraints.Null;
 import javax.ws.rs.DefaultValue;
 import java.sql.Date;
-import java.util.List;
 
 @Entity
 //@JsonIgnoreProperties(ignoreUnknown = true)
@@ -39,8 +33,8 @@ Account {
 //    private double balance=0.0f;
 
     @ColumnDefault("0.0")
-    @Column(name="balance")
-    private double balance=0.0f;
+    @Column(name = "balance")
+    private double balance = 0.0f;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date date;
@@ -49,8 +43,8 @@ Account {
     @DefaultValue("0")
     private int accountStatus;
 
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="proofid")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "proofid")
     @JsonManagedReference
     private Proof proof;
 
@@ -60,6 +54,27 @@ Account {
 
     @ManyToOne
     private Customer customer;
+    @Nullable
+    private long accountId;
+    private String remarks;
+
+    public Account(long id, String bankIfsc, String firstName, String lastName, double balance, Date date, int accountStatus, Proof proof, Customer customer, long accountId, String remarks) {
+        this.id = id;
+        this.bankIfsc = bankIfsc;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.balance = balance;
+        this.date = date;
+        this.accountStatus = accountStatus;
+        this.proof = proof;
+        this.customer = customer;
+        this.accountId = accountId;
+        this.remarks = remarks;
+    }
+
+
+    public Account() {
+    }
 
     public Customer getCustomer() {
         return customer;
@@ -68,14 +83,6 @@ Account {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-
-    @Nullable
-    private long accountId;
-
-
-
-
-    private String remarks;
 
     public long getPhoneNo() {
         return phoneNo;
@@ -102,16 +109,6 @@ Account {
     }
 
 
-    public String getBankIfsc() {
-        return bankIfsc;
-    }
-
-    public void setBankIfsc(String bankIfsc) {
-        this.bankIfsc = bankIfsc;
-    }
-
-
-
 //    public List<PrimaryTransaction> getPrimaryTransactionList() {
 //        return primaryTransactionList;
 //    }
@@ -119,6 +116,14 @@ Account {
 //    public void setPrimaryTransactionList(List<PrimaryTransaction> primaryTransactionList) {
 //        this.primaryTransactionList = primaryTransactionList;
 //    }
+
+    public String getBankIfsc() {
+        return bankIfsc;
+    }
+
+    public void setBankIfsc(String bankIfsc) {
+        this.bankIfsc = bankIfsc;
+    }
 
     public double getBalance() {
         return balance;
@@ -160,7 +165,6 @@ Account {
         this.lastName = lastName;
     }
 
-
     public Date getDate() {
         return date;
     }
@@ -169,33 +173,16 @@ Account {
         this.date = date;
     }
 
+
+//    public void setAge(int age) {
+//        this.age = age;
+//    }
+
     public String getRemarks() {
         return remarks;
     }
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
-    }
-
-
-//    public void setAge(int age) {
-//        this.age = age;
-//    }
-
-    public Account(long id, String bankIfsc, String firstName, String lastName, double balance, Date date, int accountStatus, Proof proof, Customer customer, long accountId, String remarks) {
-        this.id = id;
-        this.bankIfsc = bankIfsc;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.balance = balance;
-        this.date = date;
-        this.accountStatus = accountStatus;
-        this.proof = proof;
-        this.customer = customer;
-        this.accountId = accountId;
-        this.remarks = remarks;
-    }
-
-    public Account() {
     }
 }

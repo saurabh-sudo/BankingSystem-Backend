@@ -15,7 +15,7 @@ public class RequestFilter implements Filter {
     private static final String BACKOFFICE_URL = "http://localhost:4200"; // URL
     private static final String ONLINEBANKING_URL = "http://localhost:4201"; // OTHER URL
 
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) {
+            public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpServletRequest request = (HttpServletRequest) req;
 

@@ -8,8 +8,9 @@ import java.util.Set;
 
 @Repository
 public interface TransferDao extends JpaRepository<PrimaryTransaction, Long> {
-   // List<PrimaryTransaction> findByAccountId(long accountId);
+    // List<PrimaryTransaction> findByAccountId(long accountId);
     Set<PrimaryTransaction> findByAccountId(long accountId);
+
     Set<PrimaryTransaction> findByRecipientAccountNo(long accountId);
 //    List<PrimaryTransaction> findByRecipientAccountNo(long accountId);
 }

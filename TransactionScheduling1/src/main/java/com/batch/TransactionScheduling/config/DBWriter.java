@@ -2,7 +2,6 @@ package com.batch.TransactionScheduling.config;
 
 
 import com.common.BankData.dao.AccountDao;
-
 import com.common.BankData.dao.ScheduleDao;
 import com.common.BankData.entity.Account;
 import com.common.BankData.entity.PrimaryTransaction;
@@ -12,10 +11,9 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +34,7 @@ public class DBWriter implements ItemWriter<Schedule> {
 
 
     @Override
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public void write(List<? extends Schedule> list) throws Exception {
         List<Schedule> ad = (List<Schedule>) list;
         Date today = new Date();

@@ -1,9 +1,6 @@
 package com.common.BankData.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -11,8 +8,7 @@ import java.sql.Date;
 
 @Entity
 //@JsonIgnoreProperties(ignoreUnknown = true)
-public class Proof
-{
+public class Proof {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,6 +22,7 @@ public class Proof
     @OneToOne(mappedBy = "proof")
     @JsonBackReference
     private Account acc;
+    private int age;
 
     public Account getAcc() {
         return acc;
@@ -34,8 +31,6 @@ public class Proof
     public void setAcc(Account acc) {
         this.acc = acc;
     }
-
-    private int age;
 
     public int getProofId() {
         return proofId;

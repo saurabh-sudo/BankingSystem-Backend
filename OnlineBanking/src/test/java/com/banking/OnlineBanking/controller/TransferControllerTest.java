@@ -1,10 +1,8 @@
 package com.banking.OnlineBanking.controller;
 
 import com.banking.OnlineBanking.TestUtils;
-import com.banking.OnlineBanking.config.SecurityConfig;
 import com.common.BankData.dao.*;
 import com.common.BankData.entity.Account;
-import com.common.BankData.entity.Customer;
 import com.common.BankData.entity.PrimaryTransaction;
 import com.common.BankData.service.AdminService;
 import com.common.BankData.service.AuthenticationProvider;
@@ -17,9 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.MockBeans;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -29,13 +24,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import javax.servlet.annotation.MultipartConfig;
 import java.sql.Date;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -46,9 +40,7 @@ import static org.mockito.Mockito.when;
 @MultipartConfig
 public class TransferControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
+    private final String URL = "/transfer/balance/";
     @MockBean
     AuthenticationProvider authenticationProvider;
 
@@ -78,9 +70,8 @@ public class TransferControllerTest {
 
     @MockBean
     AdminService adminService;
-
-
-    private final String URL = "/transfer/balance/";
+    @Autowired
+    private MockMvc mockMvc;
 
     public static String asJsonString(final Object obj) {
         try {
@@ -105,11 +96,11 @@ public class TransferControllerTest {
 
         // execute
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(URLTransactionList).header("Authorization", "")
-                .content(asJsonString(
-                        e1
-                ))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+                        .content(asJsonString(
+                                e1
+                        ))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andReturn();
 
         // verify

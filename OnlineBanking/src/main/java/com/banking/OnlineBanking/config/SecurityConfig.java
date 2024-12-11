@@ -1,7 +1,6 @@
 package com.banking.OnlineBanking.config;
 
 
-
 import com.common.BankData.dao.CustomerDao;
 import com.common.BankData.service.AuthenticationProvider;
 import com.common.BankData.service.UserSecurityService;
@@ -16,7 +15,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
@@ -25,13 +23,25 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 @Configuration
 @EnableWebSecurity
 @EnableJpaRepositories(basePackageClasses = CustomerDao.class)
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserSecurityService userSecurityService;
-
-    AuthenticationProvider provider;
+    private static final RequestMatcher PROTECTED_URLS = new OrRequestMatcher(
+            new AntPathRequestMatcher("/accounts/**")
+    );
+    private static final String[] PUBLIC_MATCHERS = {
+            "/webjars/**",
+            "/css/**",
+            "/js/**",
+            "/images/**",
+            "/",
+            // "/login",
+            "/about/**",
+            "/contact/**",
+            "/error/**/*",
+            "/console/**",
+            "/signup"
+    };
 
 //    @Bean
 //    public PasswordEncoder passwordEncoder() {
@@ -46,37 +56,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                    }
 //                };
 //    }
+    AuthenticationProvider provider;
+    @Autowired
+    private UserSecurityService userSecurityService;
 
-    private static final RequestMatcher PROTECTED_URLS = new OrRequestMatcher(
-            new AntPathRequestMatcher("/accounts/**")
-    );
-
-
-    private static final String[] PUBLIC_MATCHERS = {
-            "/webjars/**",
-            "/css/**",
-            "/js/**",
-            "/images/**",
-            "/",
-           // "/login",
-            "/about/**",
-            "/contact/**",
-            "/error/**/*",
-            "/console/**",
-            "/signup"
-    };
+    public SecurityConfig(final AuthenticationProvider authenticationProvider) {
+        super();
+        this.provider = authenticationProvider;
+    }
 
     @Bean
     AuthenticationFilter authenticationFilter() throws Exception {
         final AuthenticationFilter filter = new AuthenticationFilter(PROTECTED_URLS);
         filter.setAuthenticationManager(authenticationManager());
         return filter;
-    }
-
-
-    public SecurityConfig(final AuthenticationProvider authenticationProvider) {
-        super();
-        this.provider = authenticationProvider;
     }
 
     @Override
@@ -86,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(final WebSecurity webSecurity) {
-      webSecurity.ignoring().antMatchers("/login/**");
+        webSecurity.ignoring().antMatchers("/login/**");
         webSecurity.ignoring().antMatchers("**/secured/**");
     }
 
@@ -96,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-               .and()
+                .and()
                 .authenticationProvider(provider)
                 .addFilterBefore(authenticationFilter(), AnonymousAuthenticationFilter.class)
                 .authorizeRequests()
@@ -109,10 +102,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-  //   auth.userDetailsService(userSecurityService).passwordEncoder(passwordEncoder());
+        //   auth.userDetailsService(userSecurityService).passwordEncoder(passwordEncoder());
     }
 
 }

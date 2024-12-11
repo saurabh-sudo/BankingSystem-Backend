@@ -9,21 +9,17 @@ import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
 public class CronService {
 
     @Autowired
-    private JobLauncher jobLauncher;
-
-    @Autowired
     Job loadJob;
+    @Autowired
+    private JobLauncher jobLauncher;
 
     @Scheduled(fixedRate = 60000)
     public BatchStatus load() throws JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {

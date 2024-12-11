@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CustomerDao extends JpaRepository<Customer, Long> {
     Customer findByUserNameContainingIgnoreCase(String username);
+
     Customer findByUserId(long userId);
+
     Customer findByToken(String token);
 
-    @Query(value = "SELECT nextval('username')", nativeQuery =
+    @Query(value = "SELECT nextval('hibernate_sequence')", nativeQuery =
             true)
     Long getNextCustomerId();
 
